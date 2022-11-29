@@ -1,18 +1,18 @@
 const myImage = new Image();
-myImage.src = "assets/black-panther01.jpeg";
+myImage.src = "assets/iron-man01.jpeg";
 
 myImage.addEventListener("load", () => {
 	const canvas = document.getElementById("canvas1");
 	const ctx = canvas.getContext("2d");
-	canvas.width = 960;
-	canvas.height = 820;
+	canvas.width = 656;
+	canvas.height = 743;
 
 	ctx.drawImage(myImage, 0, 0, canvas.width, canvas.height);
 	const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 	let particlesArray = [];
-	const numberOfParticles = 5000;
+	const numberOfParticles = 10000;
 
 	let mappedImage = [];
 	for (let y = 0; y < canvas.height; y++) {
@@ -45,7 +45,7 @@ myImage.addEventListener("load", () => {
 			this.y = 0;
 			this.speed = 0;
 			this.velocity = Math.random() * 0.5;
-			this.size = Math.random() * 1.5 + 1;
+			this.size = Math.random() * 1.5 + 0.5;
 			this.position1 = Math.floor(this.y);
 			this.position2 = Math.floor(this.x);
 		}
