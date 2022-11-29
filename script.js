@@ -1,14 +1,15 @@
 const myImage = new Image();
-myImage.src = "assets/image1.png";
+myImage.src = "assets/black-panther01.jpeg";
 
 myImage.addEventListener("load", () => {
 	const canvas = document.getElementById("canvas1");
 	const ctx = canvas.getContext("2d");
-	canvas.width = 600;
-	canvas.height = 600;
+	canvas.width = 960;
+	canvas.height = 820;
 
 	ctx.drawImage(myImage, 0, 0, canvas.width, canvas.height);
 	const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 	let particlesArray = [];
 	const numberOfParticles = 5000;
@@ -21,15 +22,20 @@ myImage.addEventListener("load", () => {
 			const green = pixels.data[y * 4 * pixels.width + (x * 4 + 1)];
 			const blue = pixels.data[y * 4 * pixels.width + (x * 4 + 2)];
 			const brightness = calculateRelativeBrightness(red, green, blue);
-			const cell = [(cellBrightness = brightness)];
+			const cell = [
+				(cellBrightness = brightness),
+				(cellColor = "rgb(" + red + "," + green + "," + blue + ")"),
+			];
 			row.push(cell);
 		}
 		mappedImage.push(row);
 	}
 
 	function calculateRelativeBrightness(red, green, blue) {
-		return Math.sqrt(
-			red * red * 0.229 + green * green * 0.587 + blue * blue * 0.114
+		return (
+			Math.sqrt(
+				red * red * 0.299 + green * green * 0.587 + blue * blue * 0.114
+			) / 100
 		);
 	}
 
@@ -57,6 +63,9 @@ myImage.addEventListener("load", () => {
 		}
 		draw() {
 			ctx.beginPath();
+			// Colorfull
+			// ctx.fillStyle = mappedImage[this.position1][this.position2][1];
+			// White
 			ctx.fillStyle = "white";
 			ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
 			ctx.fill();
@@ -70,7 +79,7 @@ myImage.addEventListener("load", () => {
 	init();
 	function animate() {
 		// ctx.drawImage(myImage, 0, 0, canvas.width, canvas.height);
-		ctx.globalAlpha = 0.05;
+		ctx.globalAlpha = 0.03;
 		ctx.fillStyle = "rgb(0, 0, 0)";
 		ctx.fillRect(0, 0, canvas.width, canvas.height);
 		ctx.globalAlpha = 0.2;
