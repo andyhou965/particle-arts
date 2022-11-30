@@ -1,11 +1,13 @@
 const myImage = new Image();
-myImage.src = "assets/iron-man01.jpeg";
+myImage.src = "assets/iron-man/10-1000x563.jpeg";
 
 myImage.addEventListener("load", () => {
 	const canvas = document.getElementById("canvas1");
 	const ctx = canvas.getContext("2d");
-	canvas.width = 656;
-	canvas.height = 743;
+	canvas.width = myImage.naturalWidth;
+	canvas.height = myImage.naturalHeight;
+
+	console.log(canvas.width, canvas.height);
 
 	ctx.drawImage(myImage, 0, 0, canvas.width, canvas.height);
 	const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -35,7 +37,7 @@ myImage.addEventListener("load", () => {
 		return (
 			Math.sqrt(
 				red * red * 0.299 + green * green * 0.587 + blue * blue * 0.114
-			) / 100
+			) / 150
 		);
 	}
 
@@ -44,7 +46,7 @@ myImage.addEventListener("load", () => {
 			this.x = Math.random() * canvas.width;
 			this.y = 0;
 			this.speed = 0;
-			this.velocity = Math.random() * 0.5;
+			this.velocity = Math.random() * 0.8;
 			this.size = Math.random() * 1.5 + 0.5;
 			this.position1 = Math.floor(this.y);
 			this.position2 = Math.floor(this.x);
